@@ -26,7 +26,7 @@ export class IsAdminGuard implements CanActivate {
       throw new UnauthorizedException('Unauthorized Access');
     }
 
-    if (profile.type !== 'admin') {
+    if (profile.dataValues.type !== 'admin') {
       throw new UnauthorizedException('Access denied: Admins only');
     }
 

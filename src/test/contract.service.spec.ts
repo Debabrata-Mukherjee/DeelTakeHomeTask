@@ -14,12 +14,12 @@ describe('ContractService', () => {
   beforeAll(async () => {
     sequelize = new Sequelize({
       dialect: 'sqlite',
-      storage: ':memory:', // ✅ Use an in-memory database for testing
-      models: [Profile, Contract, Job], // ✅ Register ALL related models
-      logging: false, // ✅ Disable logs during testing
+      storage: ':memory:',
+      models: [Profile, Contract, Job],
+      logging: false,
     });
 
-    await sequelize.sync({ force: true }); // ✅ Ensure tables are created
+    await sequelize.sync({ force: true });
 
     const module: TestingModule = await Test.createTestingModule({
       providers: [
@@ -35,11 +35,10 @@ describe('ContractService', () => {
   });
 
   afterAll(async () => {
-    await sequelize.close(); // ✅ Ensure DB connection is closed
+    await sequelize.close();
   });
 
   it('should return contract if profile is the client or contractor', async () => {
-    // ✅ Fix TypeScript issues with type assertion
     const profile = await Profile.create({
       firstName: 'Test',
       lastName: 'User',

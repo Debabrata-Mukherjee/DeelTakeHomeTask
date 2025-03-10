@@ -24,7 +24,7 @@ export class AnalyticsService {
       LIMIT 1
     `;
 
-    const [results] = await this.sequelize.query(query, {
+    const results = await this.sequelize.query(query, {
       replacements: { startDate, endDate },
       type: 'SELECT',
     });
@@ -36,9 +36,9 @@ export class AnalyticsService {
   async getBestClients(startDate: string, endDate: string, limit: number = 2) {
     const query = `
       SELECT p.id as id, p.firstName || ' ' || p.lastName AS clientName, SUM(j.price) AS totalPaid
-      FROM Profiles p
-      INNER JOIN Contracts c ON c.clientId = p.id
-      INNER JOIN Jobs j ON j.contractId = c.id
+      FROM profiles p
+      INNER JOIN contracts c ON c.clientId = p.id
+      INNER JOIN jobs j ON j.contractId = c.id
       WHERE p.type = 'client'
         AND j.paid = true
         AND j.paymentDate BETWEEN :startDate AND :endDate
@@ -47,9 +47,10 @@ export class AnalyticsService {
       LIMIT :limit
     `;
 
-    const [results] = await this.sequelize.query(query, {
+    const results = await this.sequelize.query(query, {
       replacements: { startDate, endDate, limit },
       type: 'SELECT',
+      raw: true,
     });
 
     return results.length > 0 ? results : { message: 'No data found' };

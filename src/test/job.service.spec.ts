@@ -15,12 +15,12 @@ describe('JobService', () => {
   beforeAll(async () => {
     sequelize = new Sequelize({
       dialect: 'sqlite',
-      storage: ':memory:', // ✅ Use an in-memory database for testing
-      models: [Job, Contract, Profile], // ✅ Register models
+      storage: ':memory:',
+      models: [Job, Contract, Profile],
       logging: false,
     });
 
-    await sequelize.sync({ force: true }); // ✅ Ensure fresh test DB
+    await sequelize.sync({ force: true });
   });
 
   beforeEach(async () => {
